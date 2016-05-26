@@ -73,7 +73,7 @@ namespace AppSyndication.DownloadService.WebSvc
 
             if (String.IsNullOrEmpty(key))
             {
-                logger.LogWarning("Could not find download redirect: {0}", key);
+                logger.LogWarning("Could not find download redirect: '{0}'", key);
 
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 return;
@@ -95,7 +95,7 @@ namespace AppSyndication.DownloadService.WebSvc
 
             if (String.IsNullOrEmpty(redirectUri))
             {
-                logger.LogError("Could not find download redirect: {0}", key);
+                logger.LogError("Could not find download redirect: '{0}'", key);
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             }
