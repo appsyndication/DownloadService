@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using AppSyndication.BackendModel.Data;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Features;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,9 +15,10 @@ namespace AppSyndication.DownloadService.WebSvc
 {
     public class Startup
     {
-        public Startup()
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
             this.Configuration = new ConfigurationBuilder()
+                .SetBasePath(hostingEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
@@ -59,8 +60,6 @@ namespace AppSyndication.DownloadService.WebSvc
             }
 
             var logger = loggerFactory.CreateLogger<Startup>();
-
-            app.UseIISPlatformHandler();
 
             app.Run(async (context) =>
             {
@@ -110,7 +109,5 @@ namespace AppSyndication.DownloadService.WebSvc
             context.Response.StatusCode = 302;
             context.Response.Headers["Location"] = redirectUri;
         }
-
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
