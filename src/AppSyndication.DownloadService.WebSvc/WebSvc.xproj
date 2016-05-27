@@ -10,8 +10,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>d1ba6fc9-6ca5-4249-80de-6d8e20a82b11</ProjectGuid>
     <RootNamespace>AppSyndication.DownloadService.WebSvc</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">.\bin</OutputPath>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
 
