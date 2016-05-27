@@ -18,7 +18,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging.TraceSource": "1.0.0-rc2-final",
     "WindowsAzure.Storage": "6.2.0",
-    "AppSyndication.BackendModel.Data": "1.0.0-build5"
+    "AppSyndication.BackendModel.Data": "1.0.0-build-*"
   },
 
   "frameworks": {
