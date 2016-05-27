@@ -12,15 +12,19 @@ namespace AppSyndication.DownloadService.WebSvc
 
         private readonly ILogger _logger;
 
-        private readonly Connection _connection;
+        private readonly IRedirectTable _redirectTable;
 
-        public TagContext(ILoggerFactory loggerFactory, IMemoryCache cache, Connection connection)
+        private readonly IDownloadTable _downloadTable;
+
+        public TagContext(ILoggerFactory loggerFactory, IMemoryCache cache, IRedirectTable redirectTable, IDownloadTable downloadTable)
         {
             _logger = loggerFactory.CreateLogger(typeof(TagContext).FullName);
 
             _cache = cache;
 
-            _connection = connection;
+            _redirectTable = redirectTable;
+
+            _downloadTable = downloadTable;
         }
 
         public async Task<string> GetTagDownloadRedirectUriAsync(string key)
@@ -31,9 +35,7 @@ namespace AppSyndication.DownloadService.WebSvc
             {
                 _logger.LogWarning("Cache miss for download key: {0}", key);
 
-                var redirectTable = _connection.RedirectTable();
-
-                var redirect = await redirectTable.GetRedirectAsync(key);
+                var redirect = await _redirectTable.GetRedirectAsync(key);
 
                 redirectUri = redirect?.Uri;
             }
@@ -43,9 +45,7 @@ namespace AppSyndication.DownloadService.WebSvc
 
         public async Task IncrementDownloadRedirectCountAsync(string key, string ip)
         {
-            var downloadsTable = _connection.DownloadTable();
-
-            await downloadsTable.IncrementDownloadRedirectCountAsync(key, ip);
+            await _downloadTable.IncrementDownloadRedirectCountAsync(key, ip);
         }
     }
 }

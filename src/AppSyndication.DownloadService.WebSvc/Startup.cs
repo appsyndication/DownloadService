@@ -10,6 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace AppSyndication.DownloadService.WebSvc
 {
@@ -28,13 +29,11 @@ namespace AppSyndication.DownloadService.WebSvc
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IMemoryCache>(
-                s => new MemoryCache(new MemoryCacheOptions())
-            );
+            services.AddSingleton<IOptions<MemoryCacheOptions>, MemoryCacheOptions>();
 
-            services.AddSingleton(
-                s => new Connection(this.Configuration["Connection:StorageConnectionString"])
-            );
+            services.AddSingleton<IMemoryCache, MemoryCache>();
+
+            services.AddTagStorage(this.Configuration["Connection:StorageConnectionString"]);
 
             services.AddSingleton<ITagContext, TagContext>();
         }
@@ -73,9 +72,9 @@ namespace AppSyndication.DownloadService.WebSvc
 
             if (String.IsNullOrEmpty(key))
             {
-                logger.LogWarning("Could not find download redirect: '{0}'", key);
+                var text = "<html><head><title>Download Service</title></head><body><h1>Download Service</h1></body></html>";
 
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsync(text);
                 return;
             }
 
