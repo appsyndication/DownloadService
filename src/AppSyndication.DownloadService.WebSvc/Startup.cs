@@ -42,7 +42,7 @@ namespace AppSyndication.DownloadService.WebSvc
         {
             var sourceSwitch = new SourceSwitch("AppSyndicationDownloadServiceTraceSource") { Level = SourceLevels.Warning };
             loggerFactory.AddTraceSource(sourceSwitch, new AzureApplicationLogTraceListener());
-            loggerFactory.AddTraceSource(sourceSwitch, new EventLogTraceListener("Application"));
+            //loggerFactory.AddTraceSource(sourceSwitch, new EventLogTraceListener("Application"));
 
 #if DEBUG
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));

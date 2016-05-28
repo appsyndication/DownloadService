@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using AppSyndication.BackendModel.Data;
 using Microsoft.Extensions.Caching.Memory;
